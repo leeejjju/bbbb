@@ -1,0 +1,15 @@
+andong global University
+HELLO world
+HELLO world
+HELLO world
+HELLO world
+HELLO world
+HELLO world
+HELLO world
+HELLO world
+
+
+int main(){
+
+oh world <>
+}
