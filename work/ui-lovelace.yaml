@@ -1,0 +1,50 @@
+title: IoTClass-JJLee@rpi
+views:
+  - path: default_view
+    title: Home
+    cards:
+      - type: map
+        entities:
+          - entity: zone.home
+        title: My location
+        dark_mode: false
+      - type: entities
+        entities:
+          - sensor.22100579_humidity
+          - sensor.22100579_temperature
+        title: My DHT22
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.22100579_light_intensity
+        title: My Light intensity
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.nth405_humidity
+          - sensor.nth405_temperature
+        title: NTH DHT22
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.nth405_light_intensity
+        title: NTH Light intensity
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - switch.led
+          - switch.usbled
+        title: Switch
+      - type: entities
+        entities:
+          - entity: button.led_on
+          - entity: button.led_off
+          - entity: button.usbled_on
+          - entity: button.usbled_off
+        title: LED/USBLED
+        state_color: true
+        show_header_toggle: false
+      - type: picture
+        image: >-
+          https://assets.petco.com/petco/image/upload/f_auto,q_auto/hamster-care-sheet-hero
+

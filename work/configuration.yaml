@@ -1,0 +1,163 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
+lovelace:
+  mode: yaml
+#  mode: storage
+
+
+
+automation:
+  - alias: 'Turn on USBLED when light intensity is low'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.22100579_Light_intensity
+      below: 500
+    action:
+      - service: switch.turn_on
+        entity_id: switch.USBLED
+      - delay: '00:00:10'  # 10 seconds delay
+      - service: switch.turn_off
+        entity_id: switch.USBLED
+
+
+  
+homeassistant:
+  name: IoTClass-JJLee@rpi
+#  latitude: 36.103295
+#  longitude: 129.387009
+#  elevation: 30	
+  customize:
+    "sensor.22100579_Temperature":
+      icon: mdi:thermometer
+    "sensor.22100579_Humidity":
+      icon: mdi:water
+    "sensor.22100579_Light_intensity":
+      icon: mdi:lightbulb
+    "sensor.nth405_Temperature":
+      icon: mdi:thermometer
+    "sensor.nth405_Humidity":
+      icon: mdi:water
+    "sensor.nth405_Light_intensity":
+      icon: mdi:lightbulb
+    "switch.USBLED":
+      icon: mdi:alarm-light
+    "switch.LED":
+      icon: mdi:led-variant-on
+    "button.USBLED_ON":
+      icon: mdi:alarm-light
+    "button.USBLED_OFF":
+      icon: mdi:alarm-light
+    "button.LED_ON":
+      icon: mdi:led-variant-on
+    "button.LED_OFF":
+      icon: mdi:led-variant-on
+
+
+mqtt:
+  
+  sensor:
+    - state_topic: "iot/22100579/dht22"
+      name: 22100579_Temperature
+      value_template: "{{ value_json.Temp }}"
+    - state_topic: "iot/22100579/dht22"
+      name: 22100579_Humidity
+      value_template: "{{ value_json.Humi }}"
+    - state_topic: "iot/22100579/cds"
+      name: 22100579_Light_intensity
+      value_template: "{{ value_json.Light }}"
+    - state_topic: "iot/nth405/dht22_t"
+      name: nth405_Temperature
+    - state_topic: "iot/nth405/dht22_h"
+      name: nth405_Humidity
+    - state_topic: "iot/nth405/cds"
+      name: nth405_Light_intensity
+
+  switch:
+    - name: LED
+      state_topic: "iot/22100579"
+      command_topic: "iot/22100579"
+      qos: 0
+      payload_on: "ledon"
+      payload_off: "ledoff"
+      retain: false
+    - name: USBLED
+      state_topic: "iot/22100579"
+      command_topic: "iot/22100579"
+      qos: 0
+      payload_on: "usbledon"
+      payload_off: "usbledoff"
+      retain: false
+
+
+  button:
+    - name: LED_ON
+      command_topic: "iot/22100579"
+      qos: 0
+      payload_press: "ledon"
+      retain: false
+    - name: LED_OFF
+      command_topic: "iot/22100579"
+      qos: 0
+      payload_press: "ledoff"
+      retain: false
+
+    - name: USBLED_ON
+      command_topic: "iot/22100579"
+      qos: 0
+      payload_press: "usbledon"
+      retain: false
+    - name: USBLED_OFF
+      command_topic: "iot/22100579"
+      qos: 0
+      payload_press: "usbledoff"
+      retain: false
+
+
+#sensor:
+#  - platform: command_line
+#    name: CPU temperature
+#    command: "cat /sys/class/thermal/thermal_zone0/temp"
+#    unit_of_measurement: "C"
+#    value_template: "{{value | multiply(0.001) | round(1)}}"
+
+
+group:
+  22100579_dht22:
+    name: "My DHT22"
+    entities:
+      - sensor.22100579_Temperature
+      - sensor.22100579_Humidity
+  22100579_cds:
+    name: "My Light intensity"
+    entities:
+      - sensor.22100579_Light_intensity
+  
+  nth_dht22:
+    name: "NTH DHT22"
+    entities:
+      - sensor.nth405_Temperature
+      - sensor.nth405_Humidity
+  nth_cds:
+    name: "NTH Light intensity"
+    entities:
+      - sensor.nth405_Light_intensity
+
+
+  btn:
+    name: "LED/USBLED"
+    entities:
+      - button.LED_ON
+      - button.LED_OFF
+      - button.USBLED_ON
+      - button.USBLED_OFF
+
