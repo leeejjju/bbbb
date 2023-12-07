@@ -124,11 +124,12 @@ static int __init iom_fnd_dd_init(void)
 		printk(KERN_WARNING"%s: can't get or assign major number %d\n", DEV_NAME, major_num);
 		return major_num;
 	}
-	ioremapped_gpio_addr = ioremap(GPIO_BASE, IOREMAP_SIZE); //base부터 size만큼 뭘 해? 초기화?
-	for(x = 0; x < sizeof(fnd_pin); x++) gpio_select(fnd_pin[x], GPIO_OUTPUT); //setting gpio direction
-	for(x = 0; x < sizeof(fnd_pin); x++) gpio_set(fnd_pin[x], SET_GPIO); //init off(active low)
-	
+
 	printk("Success to load the device %s. Major number is %d", DEV_NAME, major_num);
+	ioremapped_gpio_addr = ioremap(GPIO_BASE, IOREMAP_SIZE); //base부터 size만큼 뭘 해? 초기화?
+	for(x = 0; x < sizeof(fnd_pin)/sizeof(fnd_pin[0]); x++) gpio_select(fnd_pin[x], GPIO_OUTPUT); //setting gpio direction
+	for(x = 0; x < sizeof(fnd_pin)/sizeof(fnd_pin[0]); x++) gpio_set(fnd_pin[x], SET_GPIO); //init off(active low)
+	
 
 	return 0;
 }
@@ -138,7 +139,7 @@ static void __exit iom_fnd_dd_exit(void)
 {
 	int x;
 	//default mode of gpio is input, to prevent the crash of other output.... so we need to set gpio as input. 
-	for(x = 0; x < sizeof(fnd_pin); x++) gpio_select(fnd_pin[x], GPIO_INPUT);
+	for(x = 0; x < sizeof(fnd_pin)/sizeof(fnd_pin[0]); x++) gpio_select(fnd_pin[x], GPIO_INPUT);
 	
 	iounmap(ioremapped_gpio_addr);	
 
