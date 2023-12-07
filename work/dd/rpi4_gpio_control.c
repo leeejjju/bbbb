@@ -14,8 +14,7 @@
 #define GPIO_LEV_HIGH 1
 #define GPIO_LEV_LOW 0
 
-#define IOREMAP_SIZE 0x40 // GPFSEL0 ~ GPLEV1
-
+//#define IOREMAP_SIZE 0x40 // GPFSEL0 ~ GPLEV1
 static unsigned int *ioremapped_gpio_addr;
 
 void gpio_select(int gpio_pin_number,int function)
