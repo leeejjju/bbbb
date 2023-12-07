@@ -1,0 +1,1 @@
+cmd_/home/leeejjju/bbbb/work/dd/iom_fnd_dd/iom_fnd_dd.ko := ld -r -EL -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T arch/arm/module.lds -o /home/leeejjju/bbbb/work/dd/iom_fnd_dd/iom_fnd_dd.ko /home/leeejjju/bbbb/work/dd/iom_fnd_dd/iom_fnd_dd.o /home/leeejjju/bbbb/work/dd/iom_fnd_dd/iom_fnd_dd.mod.o;  true

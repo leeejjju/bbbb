@@ -19,6 +19,9 @@
 #define GPLEV0	0x34 //Offset of the GPIO Level register 0
 #define GPLEV1	0x38 //Offset of the GPIO Level register 1
 
-
+#define GPFSEL 0x00
+#define GPSET 0x1C
+#define GPCLR 0x28
+#define GPLEV 0x34
 
 
